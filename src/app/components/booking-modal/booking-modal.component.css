@@ -1,0 +1,6 @@
+::ng-deep p-dropdown > div {
+  width: 100%;
+}
+::ng-deep p-calendar > span{
+  width: 100%;
+}

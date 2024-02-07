@@ -1,0 +1,137 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{header}}</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="row justify-content-center">
+  <form [formGroup]="carForm" (ngSubmit)="editMode? onEdit() : onAdd()">
+    <div class="modal-body">
+      
+
+      <div class="mb-3 form-outline">
+        <label class="form-label">Car Name</label>
+        <input type="text" formControlName="name" class="form-control" placeholder="Enter Car Name" />
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['name'].dirty &&
+            carForm.hasError('required', 'name')
+          "
+          >*Car Name is required</small
+        >
+      </div>
+
+      <div class="mb-3 form-outline">
+        <label class="form-label">Car Number</label>
+        <input type="text" formControlName="carNumber" class="form-control" placeholder="Enter Car Number" />
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['carNumber'].dirty &&
+            carForm.hasError('required', 'carNumber')
+          "
+          >*Car Number is required</small
+        >
+      </div>
+
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">Company</label>
+        <p-dropdown
+          [options]="companies"
+          formControlName="companyId"
+          optionValue="id"
+          optionLabel="name"
+          [showClear]="true"
+          placeholder="Select a Company"
+        ></p-dropdown>
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['companyId'].dirty &&
+            carForm.hasError('required', 'companyId')
+          "
+          >*Company is required</small
+        >
+      </div>
+
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">From Date</label>
+        <p-calendar
+          formControlName="fromValid"
+          [showTime]="true"
+          dateFormat="yy-mm-dd"
+          placeholder="Select Date"
+        ></p-calendar>
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['fromValid'].dirty &&
+            carForm.hasError('required', 'fromValid')
+          "
+          >*From date is required</small
+        >
+      </div>
+
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">To Date</label>
+        <p-calendar
+          formControlName="toValid"
+          [showTime]="true"
+          dateFormat="yy-mm-dd"
+          placeholder="Select Date"
+        ></p-calendar>
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['toValid'].dirty &&
+            carForm.hasError('required', 'toValid')
+          "
+          >*To Date is required</small
+        >
+      </div>
+
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">Slots</label>
+        <input type="number" formControlName="slots" class="form-control" placeholder="Enter Slots" />
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['slots'].dirty &&
+            carForm.hasError('required', 'slots')
+          "
+          >*Slots is required</small
+        >
+      </div>
+
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">Fair</label>
+        <input type="number" formControlName="fair" class="form-control" placeholder="Enter Fair"/>
+        <small
+          class="text-danger"
+          *ngIf="
+            carForm.controls['fair'].dirty &&
+            carForm.hasError('required', 'fair')
+          "
+          >*Fair is required</small
+        >
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success mx-2">Save</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="bsModalRef.hide()"
+      >
+        Close
+      </button>
+    </div>
+  </form>
+</div>

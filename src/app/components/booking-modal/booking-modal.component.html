@@ -1,0 +1,117 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ header }}</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="row justify-content-center">
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">Select Company</label>
+        <p-dropdown
+          [options]="companies"
+          formControlName="companyId"
+          optionValue="id"
+          optionLabel="name"
+          [showClear]="true"
+          placeholder="Select a Company"
+        ></p-dropdown>
+        <small
+          class="text-danger"
+          *ngIf="
+            bookingForm.controls['companyId'].dirty &&
+            bookingForm.hasError('required', 'companyId')
+          "
+          >*Company is required</small
+        >
+      </div>
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">Select Car</label>
+        <p-dropdown
+          [options]="cars"
+          formControlName="carId"
+          optionValue="id"
+          [showClear]="true"
+          placeholder="Select a Car"
+          optionLabel="displayName"
+        >
+        </p-dropdown>
+        <small
+          class="text-danger"
+          *ngIf="
+            bookingForm.controls['carId'].dirty &&
+            bookingForm.hasError('required', 'carId')
+          "
+          >*Car is required</small
+        >
+      </div>
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">From Date</label>
+        <p-calendar
+          formControlName="fromValid"
+          [showTime]="true"
+          dateFormat="yy-mm-dd"
+          placeholder="Select Date-Time"
+          [minDate]="bookingForm.get('fromValid')?.value"
+          [maxDate]="bookingForm.get('toValid')?.value"
+        ></p-calendar>
+        <small
+          class="text-danger"
+          *ngIf="
+            bookingForm.controls['fromValid'].dirty &&
+            bookingForm.hasError('required', 'fromValid')
+          "
+          >*From date is required</small
+        >
+      </div>
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">To Date</label>
+        <p-calendar
+          formControlName="toValid"
+          [showTime]="true"
+          dateFormat="yy-mm-dd"
+          placeholder="Select Date-Time"
+          [minDate]="bookingForm.get('fromValid')?.value"
+          [maxDate]="bookingForm.get('toValid')?.value"
+        ></p-calendar>
+        <small
+          class="text-danger"
+          *ngIf="
+            bookingForm.controls['toValid'].dirty &&
+            bookingForm.hasError('required', 'toValid')
+          "
+          >*From date is required</small
+        >
+      </div>
+      <div class="mb-3 d-flex flex-column form-outline">
+        <label class="form-label">Fair</label>
+        <input type="number" formControlName="totalFare" class="form-control" />
+        <small
+          class="text-danger"
+          *ngIf="
+            bookingForm.controls['totalFare'].dirty &&
+            bookingForm.hasError('required', 'totalFare')
+          "
+          >*Fair is required</small
+        >
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success mx-2">Save</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="bsModalRef.hide()"
+      >
+        Close
+      </button>
+    </div>
+  </form>
+</div>

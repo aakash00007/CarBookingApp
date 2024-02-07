@@ -1,0 +1,113 @@
+<app-header *ngIf="selectedTimeZone" [timeZone] = "selectedTimeZone"></app-header>
+
+<div *ngIf="!isTimezoneSelected">
+  <div class="card flex justify-content-center">
+    <p-dialog
+      header="Select TimeZone"
+      class="mx-auto"
+      [(visible)]="visible"
+      [style]="{ width: '50vw' }"
+    >
+      <div class="flex py-2 justify-content-center">
+        <div class="card flex justify-content-center">
+          <p-dropdown
+            class="mx-auto"
+            appendTo="body"
+            [options]="timeZones"
+            [(ngModel)]="selectedTimeZone"
+            optionLabel="timeZoneName"
+            [showClear]="true"
+            placeholder="Select TimeZone"
+          ></p-dropdown>
+        </div>
+      </div>
+      <button class="btn btn-success px-3 py-2" (click)="onSave()">Save</button>
+    </p-dialog>
+  </div>
+</div>
+
+<div *ngIf="role == 'Admin' && isTimezoneSelected">
+  <div class="row p-2 mx-2">
+    <div class="container margin-fix p-0">
+      <button class="btn btn-primary px-3 py-2 mb-3" (click)="openAddModal()">
+        Add Car
+      </button>
+
+      <div class="card p-0 item-table p-3">
+        <table
+          class="col-md-8 col-lg-8 col-sm-6 table table-hover align-items-center my-3"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>CarNumber</th>
+              <th>Company</th>
+              <th>Valid From</th>
+              <th>Valid To</th>
+              <th>Available Slots</th>
+              <th>Fair</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of carList">
+              <td>{{ item.name }}</td>
+              <td>{{ item.carNumber }}</td>
+              <td>{{ item.company.name }}</td>
+              <td>{{ item.fromValid }}</td>
+              <td>{{ item.toValid }}</td>
+              <td>{{ item.slots }}</td>
+              <td>{{ item.fair }}/-</td>
+              <td>
+                <button class="btn btn-info me-2" (click)="openEditModal(item.id)">
+                  <i
+                    class="fa-solid fa-pen-to-square"
+                    style="font-size: 20px; padding: 0"
+                  ></i>
+                </button>
+                <button
+                  class="btn btn-danger me-2" (click)="openDeleteModal(item.id)"
+                >
+                  <i
+                    class="fa-solid fa-trash"
+                    style="font-size: 20px; padding: 0"
+                  ></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog></p-dialog>
+</div>
+
+<div *ngIf="role == 'User' && isTimezoneSelected">
+  <div class="row p-2 mx-2">
+    <div class="container margin-fix p-0">
+      <button class="btn btn-primary px-3 py-2 mb-3" (click)="openBookingModal()">
+        Add Booking
+      </button>
+    </div>
+    <div class="row justify-content-center">
+      <div
+        *ngFor="let item of bookings"
+        class="card box-shadow col-sm-5 col-md-4 col-lg-4 m-5 p-0"
+        style="width: 18rem"
+      >
+        <div class="card-body">
+          <h5 class="card-title">{{ item.car.name }}</h5>
+          <p class="card-text"><strong>Company:</strong> {{item.car.company.name}}</p>
+          <p class="card-text"><strong>Price/Hour: </strong>{{item.car.fair}}/-</p>
+          <p class="card-text"><strong>Booked From :</strong> {{ item.fromValid }}</p>
+          <p class="card-text"><strong>Booked Till :</strong> {{ item.toValid }}</p>
+          <p class="card-text">
+            <strong>Total Price: </strong>{{ item.totalFare }}/-
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

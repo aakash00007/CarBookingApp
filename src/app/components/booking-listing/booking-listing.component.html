@@ -1,0 +1,23 @@
+<app-header></app-header>
+<ng-container *ngIf="role == 'Admin'">
+  <div class="container margin-fix">
+    <div class="row justify-content-center">
+      <div
+        *ngFor="let item of bookings"
+        class="card box-shadow col-sm-5 col-md-4 col-lg-4 m-5 p-0"
+        style="width: 18rem"
+      >
+        <div class="card-body">
+          <h5 class="card-title">{{ item.car.name }}</h5>
+          <p class="card-text"><strong>Company:</strong> {{item.car.company.name}}</p>
+          <p class="card-text"><strong>Price/Hour: </strong>{{item.car.fair}}/-</p>
+          <p class="card-text"><strong>Booked From :</strong> {{ item.fromValid }}</p>
+          <p class="card-text"><strong>Booked Till :</strong> {{ item.toValid }}</p>
+          <p class="card-text">
+            <strong>Total Price: </strong>{{ item.totalFare }}/-
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
